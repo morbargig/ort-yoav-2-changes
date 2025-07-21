@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  hebrew-calculator:
+    build: .
+    container_name: hebrew-calculator
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    stdin_open: true
+    tty: true
+    network_mode: host
