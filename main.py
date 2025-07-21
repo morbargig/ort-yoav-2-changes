@@ -15,26 +15,26 @@ def demo_calculator():
     """Demonstrate calculator functionality with example calculations."""
     print("🧮 Welcome to the Python Calculator Demo!")
     print("=" * 50)
-    
+
     # Create calculator instance
     calc = Calculator()
-    
+
     print("\n📝 Running example calculations...")
     print("-" * 30)
-    
+
     try:
         # Basic arithmetic operations
         print(f"Addition: 10 + 5 = {calc.add(10, 5)}")
         print(f"Subtraction: 10 - 3 = {calc.subtract(10, 3)}")
         print(f"Multiplication: 4 * 6 = {calc.multiply(4, 6)}")
         print(f"Division: 15 / 3 = {calc.divide(15, 3)}")
-        
+
         # Advanced operations
         print(f"Power: 2^4 = {calc.power(2, 4)}")
         print(f"Square root: √25 = {calc.square_root(25)}")
         print(f"Factorial: 5! = {calc.factorial(5)}")
         print(f"Percentage: 25% of 200 = {calc.percentage(200, 25)}")
-        
+
         # Show calculation history
         print("\n📋 Calculation History:")
         print("-" * 20)
@@ -44,7 +44,7 @@ def demo_calculator():
                 print(f"{i}. {calculation}")
         else:
             print("No calculations in history (methods not implemented yet)")
-            
+
     except Exception as e:
         print(f"❌ Error: {e}")
         print("💡 This probably means some methods are not implemented yet.")
@@ -66,13 +66,13 @@ def interactive_calculator():
     print("8. Percentage (b% of a)")
     print("9. Show history")
     print("0. Exit")
-    
+
     calc = Calculator()
-    
+
     while True:
         try:
             choice = input("\nEnter your choice (0-9): ").strip()
-            
+
             if choice == "0":
                 print("👋 Goodbye!")
                 break
@@ -124,7 +124,7 @@ def interactive_calculator():
                     print("No calculations in history yet.")
             else:
                 print("❌ Invalid choice. Please enter a number from 0-9.")
-                
+
         except ValueError as e:
             print(f"❌ Error: {e}")
         except Exception as e:
@@ -139,14 +139,15 @@ def main():
     print("This project helps students practice Python programming")
     print("by implementing calculator methods in calculator.py")
     print()
-    
+
     # Run demonstration
     demo_calculator()
-    
+
     # Ask if user wants interactive mode
     print("\n" + "=" * 50)
-    choice = input("Would you like to try interactive mode? (y/n): ").lower().strip()
-    
+    choice = input(
+        "Would you like to try interactive mode? (y/n): ").lower().strip()
+
     if choice in ['y', 'yes']:
         interactive_calculator()
     else:
@@ -158,4 +159,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
