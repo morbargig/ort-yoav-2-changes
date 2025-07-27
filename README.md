@@ -19,7 +19,7 @@ A hands-on Python programming exercise designed for students to practice impleme
 ### Prerequisites
 
 - [VS Code](https://code.visualstudio.com/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)zxvzxvzxvzxvzxv
 - [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for VS Code
 
 ### Setup Instructions
