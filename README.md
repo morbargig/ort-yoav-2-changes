@@ -1,10 +1,4 @@
-# 🧮 Python Calculator Web App
-
-A simple calculator web application for students to practice Python programming.
-
-## 🎯 Project Goal
-
-Students implement calculator methods in `calculator.py` and test them via a web interface.
+tudents implement calculator methods in `calculator.py` and test them via a web interface.
 
 ## 🚀 Setup
 
