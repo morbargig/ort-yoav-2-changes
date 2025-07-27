@@ -1,3 +1,5 @@
+עבודה בינונית
+
 tudents implement calculator methods in `calculator.py` and test them via a web interface.
 
 ## 🚀 Setup
