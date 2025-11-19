@@ -20,7 +20,7 @@ class Calculator:
     def subtract(self, a, b):
         """Subtract b from a"""
         # TODO: Implement subtraction
-        pass
+        return a - b
 
     def multiply(self, a, b):
         # TODO: Implement multiplication
