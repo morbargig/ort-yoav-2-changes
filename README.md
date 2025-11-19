@@ -89,6 +89,7 @@ When all methods work, the calculator will be complete! 🎉
 
 ### Other Documentation
 - **CI/CD Overview**: [CI_CD_DOCUMENTATION.md](CI_CD_DOCUMENTATION.md) - Detailed CI/CD architecture explanation
+- **Render Deployment**: [RENDER_DEPLOYMENT_SETUP.md](RENDER_DEPLOYMENT_SETUP.md) - GitLab CI/CD automatic Render deployments with secrets
 - **GitHub Secrets**: [GITHUB_SECRETS_GUIDE.md](GITHUB_SECRETS_GUIDE.md) - Setting up GitHub Actions secrets
 - **Docker Username**: [SETUP_DOCKER_USERNAME.md](SETUP_DOCKER_USERNAME.md) - Docker Hub setup
 
@@ -327,6 +328,17 @@ docker compose -f docker-compose.gitlab.yml exec gitlab cat /etc/gitlab/initial_
 - `CI_REGISTRY_USER`, `CI_REGISTRY_PASSWORD`, `CI_REGISTRY` – GitLab Container Registry
 - `CI_REGISTRY_IMAGE` – Registry image path
 
+**Required: Configure Render Deployment Variables**
+
+For automatic Render deployments, set these in GitLab: **Settings → CI/CD → Variables**
+
+| Variable | Value | Protected | Masked |
+|----------|-------|-----------|--------|
+| `RENDER_SERVICE_ID` | `srv-XXXXXXXXXXXXX` | ✅ | ✅ |
+| `RENDER_DEPLOY_KEY` | `your-deploy-key` | ✅ | ✅ |
+
+📚 **See [RENDER_DEPLOYMENT_SETUP.md](RENDER_DEPLOYMENT_SETUP.md) for detailed setup instructions**
+
 **Optional: Configure Artifactory Variables**
 
 If you want to use Artifactory (optional), set these in GitLab: **Settings → CI/CD → Variables**
@@ -346,13 +358,14 @@ If you want to use Artifactory (optional), set these in GitLab: **Settings → C
 #### Pipeline Behavior:
 - **All branches/tags:** Runs tests and builds image to GitLab Container Registry
 - **Artifactory push:** Manual stage (trigger from GitLab UI → Pipelines)
+- **Render deployment:** Automatic on main/master branches after tests pass
 
 ### CI/CD Summary
 
 | Platform | Test | Build | Docker Hub | Artifactory | Render Deploy |
 |----------|------|-------|------------|-------------|---------------|
 | GitHub Actions | ✅ All pushes/PRs | ✅ On tags | ✅ On tags | ✅ On tags (optional) | ✅ On main/tags (optional) |
-| GitLab CI/CD | ✅ All branches/MRs | ✅ All branches | ❌ | ✅ Manual trigger | ❌ |
+| GitLab CI/CD | ✅ All branches/MRs | ✅ All branches | ❌ | ✅ Manual trigger | ✅ Auto on main/master |
 
 **Note**: GitLab CI/CD runs locally via Docker Compose with GitLab CE, Runner, and Artifactory. See [GITLAB_CI_CD_SETUP.md](GITLAB_CI_CD_SETUP.md) for detailed educational guide.
 
@@ -465,3 +478,6 @@ The service uses:
 - Multiple instances
 - More build minutes
 - Custom domains with SSL
+
+
+
