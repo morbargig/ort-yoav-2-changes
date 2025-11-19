@@ -184,6 +184,9 @@ class TestCalculator:
                 is_method_implemented(self.calc, 'divide')):
             pytest.skip("Required methods (add, multiply, divide) not implemented yet")
         
+        # Clear history from implementation checks
+        self.calc.clear_history()
+        
         # Perform some calculations
         self.calc.add(2, 3)
         self.calc.multiply(4, 5)
@@ -202,6 +205,9 @@ class TestCalculator:
         if not (is_method_implemented(self.calc, 'add') and 
                 is_method_implemented(self.calc, 'subtract')):
             pytest.skip("Required methods (add, subtract) not implemented yet")
+        
+        # Clear history from implementation checks
+        self.calc.clear_history()
         
         # Add some calculations
         self.calc.add(1, 1)

@@ -6,30 +6,37 @@ Students need to implement all the methods below.
 
 
 class Calculator:
+    """A simple calculator class with basic arithmetic operations."""
     def __init__(self):
         self.history = []
 
     def add(self, a, b):
         """Add two numbers"""
-        return a + b
-
-        # TODO: Implement addition
-        # Hint: result = a + b, then add to history
-        pass
+        result = a + b
+        self.history.append(f"{a} + {b} = {result}")
+        return result
 
     def subtract(self, a, b):
         """Subtract b from a"""
-        # TODO: Implement subtraction
-        return a - b
+        result = a - b
+        self.history.append(f"{a} - {b} = {result}")
+        return result
 
     def multiply(self, a, b):
-        # TODO: Implement multiplication
-        pass
+        """Multiply two numbers"""
+        result = a * b
+        self.history.append(f"{a} × {b} = {result}")
+        return result
 
     def divide(self, a, b):
-        # TODO: Implement division
-        pass
-    def get_history(self):     
+        """Divide a by b"""
+        if b == 0:
+            raise ValueError("Cannot divide by zero")
+        result = a / b
+        self.history.append(f"{a} ÷ {b} = {result}")
+        return result
+
+    def get_history(self):
         """Return calculation history"""
         return self.history
 

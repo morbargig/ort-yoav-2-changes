@@ -2,6 +2,7 @@ stages:
   - test
   - build
   - push
+  - deploy
 
 variables:
   # Docker-in-Docker (DinD) configuration
@@ -22,6 +23,20 @@ test:
     - echo "Running tests..."
     - python -m pytest test_calculator.py -v
     - echo "✅ All tests passed!"
+  only:
+    - branches
+    - merge_requests
+
+lint:
+  stage: test
+  image: python:3.11-slim
+  before_script:
+    - pip install --no-cache-dir -r requirements.txt
+    - pip install pylint
+  script:
+    - echo "Running Linting..."
+    - pylint calculator.py
+    - echo "✅ All linting passed!"
   only:
     - branches
     - merge_requests
@@ -85,3 +100,39 @@ deploy_artifactory:
   when: manual
   # Allow pipeline to succeed even if this step fails (optional step)
   allow_failure: true
+
+# Deploy to Render - triggers Render deployment hook
+deploy_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  variables:
+    # Render deployment configuration (values set in GitLab CI/CD variables)
+    RENDER_DEPLOY_URL: "https://api.render.com/deploy/${RENDER_SERVICE_ID}?key=${RENDER_DEPLOY_KEY}"
+  before_script:
+    - |
+      if [ -z "$RENDER_SERVICE_ID" ] || [ -z "$RENDER_DEPLOY_KEY" ]; then
+        echo "❌ Error: RENDER_SERVICE_ID and RENDER_DEPLOY_KEY must be set in GitLab CI/CD variables"
+        exit 1
+      fi
+  script:
+    - echo "Triggering Render deployment for service ${RENDER_SERVICE_ID}..."
+    - |
+      response=$(curl -s -w "\n%{http_code}" -X GET "$RENDER_DEPLOY_URL")
+      http_code=$(echo "$response" | tail -n1)
+      body=$(echo "$response" | sed '$d')
+      
+      echo "Response: $body"
+      
+      if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
+        echo "✅ Render deployment triggered successfully!"
+      else
+        echo "❌ Deployment failed with HTTP code: $http_code"
+        exit 1
+      fi
+  only:
+    - main
+  needs:
+    - test
+    - lint
+    - build
+
